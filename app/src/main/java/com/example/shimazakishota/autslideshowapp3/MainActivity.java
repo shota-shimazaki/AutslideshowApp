@@ -124,7 +124,14 @@ public class MainActivity extends AppCompatActivity {
                                         mMoveButton.setEnabled(false);
                                         mBackButton.setEnabled(false);
                                         mStartButton.setText("停止");
+                                    } else if(cursor.moveToLast()){if (cursor.moveToFirst()) {
+                                        int fieldIndex = cursor.getColumnIndex(MediaStore.Images.Media._ID);
+                                        Long id = cursor.getLong(fieldIndex);
+                                        Uri imageUri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id);
+                                        ImageView imageView = (ImageView) findViewById(R.id.imageView);
+                                        imageView.setImageURI(imageUri);
                                     } else {
+                                    }
                                     }
                                 }
                             });
@@ -141,13 +148,14 @@ public class MainActivity extends AppCompatActivity {
         mBackButton.setOnClickListener(new View.OnClickListener() {
 @Override
 public void onClick(View v) {
-        if (cursor.moveToPrevious()) {
+    if (cursor.moveToPrevious()) {
         int fieldIndex = cursor.getColumnIndex(MediaStore.Images.Media._ID);
         Long id = cursor.getLong(fieldIndex);
         Uri imageUri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id);
         ImageView imageView = (ImageView) findViewById(R.id.imageView);
         imageView.setImageURI(imageUri);
-        } else { if (cursor.moveToLast()) {
+    } else {
+        if (cursor.moveToLast()) {
             int fieldIndex = cursor.getColumnIndex(MediaStore.Images.Media._ID);
             Long id = cursor.getLong(fieldIndex);
             Uri imageUri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id);
@@ -155,8 +163,8 @@ public void onClick(View v) {
             imageView.setImageURI(imageUri);
         } else {
         }
-        }
-        }
+    }
+}
         });
         }
         }
